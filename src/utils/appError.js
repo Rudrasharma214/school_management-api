@@ -1,4 +1,4 @@
-import { STATUS } from '../constant/statusCodes.js';
+import { STATUS } from '../constants/statusCodes.js';
 
 export default class AppError extends Error {
   constructor(message, statusCode = STATUS.INTERNAL_ERROR) {
