@@ -35,6 +35,8 @@ Validation Rules
 ### 2) GET /listSchools?latitude=xx&longitude=xx
 Returns schools sorted by nearest distance from the given user location.
 
+Coordinates can also be sent in the request body, and the controller accepts the aliases `lat`, `lng`, and `lon`.
+
 Query Parameters
 - latitude: required, numeric, range -90 to 90
 - longitude: required, numeric, range -180 to 180
@@ -67,22 +69,8 @@ Create a .env file in project root:
 - DB_PASSWORD=your_db_password
 - DB_NAME=your_db_name
 
-4) Setup MySQL Database and Table
-Create database and required table:
-
-CREATE DATABASE IF NOT EXISTS your_db_name;
-USE your_db_name;
-
-CREATE TABLE IF NOT EXISTS schools (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  address VARCHAR(255) NOT NULL,
-  latitude FLOAT NOT NULL,
-  longitude FLOAT NOT NULL
-);
-
-5) Run Server
+4) Run Server
 - npm run dev
 
-6) Health Check
+5) Health Check
 - GET http://localhost:5000/health

@@ -30,6 +30,18 @@ const buildPoolConfig = () => ({
     keepAliveInitialDelay: 0,
 });
 
+const ensureSchoolsTable = async (connection) => {
+    await connection.execute(`
+        CREATE TABLE IF NOT EXISTS schools (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            address VARCHAR(255) NOT NULL,
+            latitude FLOAT NOT NULL,
+            longitude FLOAT NOT NULL
+        )
+    `);
+};
+
 export const initializeDatabase = async () => {
     validateConfig();
 
@@ -38,8 +50,12 @@ export const initializeDatabase = async () => {
     }
 
     const connection = await pool.getConnection();
-    await connection.ping();
-    connection.release();
+    try {
+        await connection.ping();
+        await ensureSchoolsTable(connection);
+    } finally {
+        connection.release();
+    }
 
     return pool;
 };
